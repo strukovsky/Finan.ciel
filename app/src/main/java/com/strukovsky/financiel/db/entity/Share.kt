@@ -10,6 +10,8 @@ data class Share(
     val _id: Int,
     val ticker: String,
     val country: String,
+    val industry: String,
+    val description: String,
     @ColumnInfo(name = "shares_outstanding")
     val sharesOutstanding: Long
 )
