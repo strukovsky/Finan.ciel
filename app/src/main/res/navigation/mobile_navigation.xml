@@ -9,17 +9,17 @@
             android:id="@+id/navigation_home"
             android:name="com.strukovsky.financiel.ui.analysis.AnalysisFragment"
             android:label="@string/title_home"
-            tools:layout="@layout/fragment_home"/>
+            tools:layout="@layout/fragment_analysis"/>
 
     <fragment
             android:id="@+id/navigation_dashboard"
             android:name="com.strukovsky.financiel.ui.search.SearchFragment"
             android:label="@string/title_dashboard"
-            tools:layout="@layout/fragment_dashboard"/>
+            tools:layout="@layout/fragment_search"/>
 
     <fragment
             android:id="@+id/navigation_notifications"
             android:name="com.strukovsky.financiel.ui.settings.SettingsFragment"
             android:label="@string/title_notifications"
-            tools:layout="@layout/fragment_notifications"/>
+            tools:layout="@layout/fragment_settings"/>
 </navigation>

@@ -20,7 +20,7 @@ public class AnalysisFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         analysisViewModel =
                 new ViewModelProvider(this).get(AnalysisViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_analysis, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         analysisViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
