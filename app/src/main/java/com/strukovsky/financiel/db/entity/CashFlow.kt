@@ -13,7 +13,7 @@ import java.util.*
 data class CashFlow(
     @PrimaryKey(autoGenerate = true)
     val _id: Int,
-    @ColumnInfo(name="share_id")
+    @ColumnInfo(name="share_id", index = true)
     val shareId: Int,
 
     val revenue: Long,

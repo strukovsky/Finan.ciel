@@ -2,9 +2,10 @@ package com.strukovsky.financiel.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = Share::class, childColumns = ["share_id"], parentColumns = ["id"])])
 data class BalanceSheet
     (
     /**
@@ -13,6 +14,8 @@ data class BalanceSheet
     @PrimaryKey(autoGenerate = true)
     val _id: Int,
 
+    @ColumnInfo(index = true, name = "share_id")
+    val shareId: Int,
     /*
     Here assets start. Assets are logically divided into current and long-term assets.
      */

@@ -1,19 +1,16 @@
 package com.strukovsky.financiel;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-import androidx.room.Room;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.strukovsky.financiel.db.AppDatabase;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.strukovsky.financiel.db.entity.Share;
-import com.strukovsky.financiel.db.repository.ShareRepository;
+import com.strukovsky.financiel.db.task.ReadAllSharesTask;
+import com.strukovsky.financiel.db.task.TaskRunner;
 
 import java.util.List;
 
@@ -27,11 +24,23 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_search, R.id.navigation_analysis, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        TaskRunner.INSTANCE.execute(new ReadAllSharesTask(this), new TaskRunner.Callback<List<? extends Share>>() {
+            @Override
+            public void onComplete(List<? extends Share> result) {
+                StringBuilder builder = new StringBuilder();
+                for (Share share: result)
+                {
+                    builder.append(share);
+                    builder.append("    ");
+                }
+                Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
