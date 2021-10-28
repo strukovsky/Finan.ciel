@@ -21,13 +21,13 @@ public class AnalysisFragment extends Fragment {
         analysisViewModel =
                 new ViewModelProvider(this).get(AnalysisViewModel.class);
         View root = inflater.inflate(R.layout.fragment_analysis, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        /*final TextView textView = root.findViewById(R.id.);
         analysisViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 }
