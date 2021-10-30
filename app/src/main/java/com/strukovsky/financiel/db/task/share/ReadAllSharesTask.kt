@@ -1,4 +1,4 @@
-package com.strukovsky.financiel.db.task
+package com.strukovsky.financiel.db.task.share
 
 import android.content.Context
 import com.strukovsky.financiel.db.MainDatabase

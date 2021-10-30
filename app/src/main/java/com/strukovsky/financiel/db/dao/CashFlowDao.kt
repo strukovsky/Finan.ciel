@@ -1,6 +1,7 @@
 package com.strukovsky.financiel.db.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.strukovsky.financiel.db.entity.CashFlow
 
@@ -8,4 +9,6 @@ import com.strukovsky.financiel.db.entity.CashFlow
 interface CashFlowDao {
     @Query("SELECT * FROM CashFlow")
     fun getAllCashFlow(): List<CashFlow>
+    @Insert
+    fun addCashFlow(cashFlow: CashFlow)
 }
