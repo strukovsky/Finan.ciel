@@ -8,5 +8,11 @@
         tools:context=".ui.analysis.AnalysisFragment"
         android:orientation="vertical"
 >
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/query" android:hint="@string/query" android:inputType="text"/>
+
+    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent" android:layout_height="wrap_content"
+                                               android:id="@+id/search_result"
+    />
 
 </LinearLayout>

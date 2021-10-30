@@ -7,15 +7,15 @@
 
     <fragment
             android:id="@+id/navigation_search"
-            android:name="com.strukovsky.financiel.ui.analysis.AnalysisFragment"
+            android:name="com.strukovsky.financiel.ui.search.SearchFragment"
             android:label="@string/title_search"
-            tools:layout="@layout/fragment_analysis"/>
+            tools:layout="@layout/fragment_search"/>
 
     <fragment
             android:id="@+id/navigation_analysis"
-            android:name="com.strukovsky.financiel.ui.search.SearchFragment"
+            android:name="com.strukovsky.financiel.ui.analysis.AnalysisFragment"
             android:label="@string/title_analysis"
-            tools:layout="@layout/fragment_search"/>
+            tools:layout="@layout/fragment_analysis"/>
 
     <fragment
             android:id="@+id/navigation_settings"

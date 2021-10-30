@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(foreignKeys = [ForeignKey(entity = Share::class, childColumns = ["share_id"], parentColumns = ["id"])])
+@Entity(foreignKeys = [ForeignKey(entity = Share::class, childColumns = ["share_id"], parentColumns = ["_id"])])
 data class BalanceSheet
     (
     /**

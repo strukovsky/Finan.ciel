@@ -30,28 +30,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        TaskRunner.INSTANCE.execute(new AddShareTask(this, new Share(2, "APPL", "USA", "IT", "Apple is a company", 1000000)),
+
+
+    }
+
+    protected void populateDatabase()
+    {
+     TaskRunner.INSTANCE.execute(new AddShareTask(this, new Share(6, "ET", "USA", "Energy", "Energy Transfer LP is a company", 1000000)),
                 new TaskRunner.Callback<Boolean>() {
                     @Override
                     public void onComplete(Boolean result) {
                         Toast.makeText(MainActivity.this, "added", Toast.LENGTH_LONG).show();
                     }
                 });
-        TaskRunner.INSTANCE.execute(new ReadAllSharesTask(this), new TaskRunner.Callback<List<? extends Share>>() {
-            @Override
-            public void onComplete(List<? extends Share> result) {
-                StringBuilder builder = new StringBuilder();
-                for (Share share: result)
-                {
-                    builder.append(share);
-                    builder.append("    ");
-                }
-                Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-
     }
-
 }
 

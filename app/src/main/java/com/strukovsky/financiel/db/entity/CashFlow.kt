@@ -8,7 +8,7 @@ import java.util.*
 
 @Entity
     (
-    foreignKeys = [ForeignKey(entity = Share::class, childColumns = ["share_id"], parentColumns = ["id"])]
+    foreignKeys = [ForeignKey(entity = Share::class, childColumns = ["share_id"], parentColumns = ["_id"])]
             )
 data class CashFlow(
     @PrimaryKey(autoGenerate = true)
