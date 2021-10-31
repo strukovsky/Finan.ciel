@@ -1,6 +1,7 @@
 package com.strukovsky.financiel;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -9,10 +10,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.strukovsky.financiel.db.entity.Share;
+import com.strukovsky.financiel.db.task.share.AddAllSharesTask;
 import com.strukovsky.financiel.db.task.share.AddShareTask;
+import com.strukovsky.financiel.db.task.share.FindShareByTicker;
 import com.strukovsky.financiel.db.task.share.ReadAllSharesTask;
 import com.strukovsky.financiel.db.task.TaskRunner;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,13 +41,20 @@ public class MainActivity extends AppCompatActivity {
 
     protected void populateDatabase()
     {
-     TaskRunner.INSTANCE.execute(new AddShareTask(this, new Share(6, "ET", "USA", "Energy", "Energy Transfer LP is a company", 1000000)),
-                new TaskRunner.Callback<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean result) {
-                        Toast.makeText(MainActivity.this, "added", Toast.LENGTH_LONG).show();
-                    }
-                });
+        List<Share> data = Arrays.asList(
+                new Share(1, "APPL", "Apple", "USA", "IT",
+                        "Apple Company is big company", 100000000),
+                new Share(2, "ET", "Energy Transfer LP", "USA", "Energetics",
+                        "Energy Transfer LP is gas company", 10000000),
+                new Share(3, "F", "Ford", "USA", "Automobiles",
+                        "Ford is automobiles", 5000000)
+        );
+     TaskRunner.INSTANCE.execute(new AddAllSharesTask(this, data), new TaskRunner.Callback<Boolean>() {
+         @Override
+         public void onComplete(Boolean result) {
+             Log.i("AAAAA", result.toString());
+         }
+     });
     }
 }
 

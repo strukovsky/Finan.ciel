@@ -9,6 +9,7 @@ data class Share(
     @PrimaryKey(autoGenerate = true)
     val _id: Int,
     val ticker: String,
+    val name: String,
     val country: String,
     val industry: String,
     val description: String,

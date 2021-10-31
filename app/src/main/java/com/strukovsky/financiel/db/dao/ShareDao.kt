@@ -13,4 +13,7 @@ interface ShareDao
 
     @Insert
     fun addShare(share: Share)
+
+    @Query("SELECT * FROM share WHERE ticker LIKE '%' || :query || '%'")
+    fun findByTicker(query: String): List<Share>
 }

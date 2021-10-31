@@ -9,7 +9,7 @@ import com.strukovsky.financiel.db.entity.BalanceSheet
 import com.strukovsky.financiel.db.entity.CashFlow
 import com.strukovsky.financiel.db.entity.Share
 
-@Database(entities = [Share::class, CashFlow::class, BalanceSheet::class], version = 1, exportSchema = false)
+@Database(entities = [Share::class, CashFlow::class, BalanceSheet::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
    abstract val shareDao: ShareDao
    abstract val cashFlowDao: CashFlowDao

@@ -1,5 +1,6 @@
 package com.strukovsky.financiel.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,13 @@ import com.strukovsky.financiel.db.entity.Share
 class ShareAdapter(private var data: List<Share>): RecyclerView.Adapter<ShareAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val shareTickerView: TextView = view.findViewById(R.id.share_ticker)
-        val shareIndustry: TextView = view.findViewById(R.id.share_industry)
+        val shareTicker: TextView = view.findViewById(R.id.share_ticker)
+        val shareName: TextView = view.findViewById(R.id.share_name)
     }
 
-    fun updateData(shares: List<Share>)
+    fun updateData(shares: Any)
     {
-        data = shares
+        data = shares as List<Share>
         this.notifyDataSetChanged()
     }
 
@@ -28,8 +29,11 @@ class ShareAdapter(private var data: List<Share>): RecyclerView.Adapter<ShareAda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentShare = data[position]
-        holder.shareIndustry.text = currentShare.industry
-        holder.shareTickerView.text = currentShare.ticker
+        holder.shareName.text = currentShare.name
+        holder.shareTicker.text = currentShare.ticker
+        holder.itemView.setOnClickListener {
+            Log.i("AAAAAA", holder.shareTicker.text.toString())
+        }
     }
 
     override fun getItemCount(): Int {
