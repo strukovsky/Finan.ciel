@@ -29,9 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements TextWatcher {
 
     private SearchViewModel searchViewModel;
+    private final ShareAdapter shareAdapter = new ShareAdapter(new ArrayList<>());
+    private final List<Share> allShares = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,51 +42,44 @@ public class SearchFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
         EditText query = root.findViewById(R.id.query);
         RecyclerView searchResult = root.findViewById(R.id.search_result);
-        final List<Share> shareList = new ArrayList<>();
+        searchResult.setAdapter(shareAdapter);
+        searchResult.setLayoutManager(new LinearLayoutManager(root.getContext()));
+
         TaskRunner.INSTANCE.execute(new ReadAllSharesTask(this.requireContext()), new TaskRunner.Callback<List<? extends Share>>() {
             @Override
             public void onComplete(List<? extends Share> result) {
-                shareList.addAll(result);
-            }
-        });
-        ShareAdapter shareAdapter = new ShareAdapter(shareList);
-        searchResult.setAdapter(shareAdapter);
-        searchResult.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        query.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String queryString = s.toString();
-                if(queryString.equals(""))
-                {
-                    TaskRunner.INSTANCE.execute(new ReadAllSharesTask(root.getContext()), new TaskRunner.Callback<List<? extends Share>>() {
-                        @Override
-                        public void onComplete(List<? extends Share> result) {
-                            shareAdapter.updateData(result);
-                        }
-                    });
-                }
-                else
-                TaskRunner.INSTANCE.execute(new FindShareByTicker(root.getContext(), queryString), new TaskRunner.Callback<List<? extends Share>>() {
-                    @Override
-                    public void onComplete(List<? extends Share> result) {
-                        shareAdapter.updateData(result);
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                allShares.addAll(result);
+                shareAdapter.updateData(allShares);
 
             }
         });
 
-
+        query.addTextChangedListener(this);
 
         return root;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        String queryString = s.toString();
+        if (queryString.equals("")) {
+           shareAdapter.updateData(allShares);
+        } else
+            TaskRunner.INSTANCE.execute(new FindShareByTicker(requireContext(), queryString), new TaskRunner.Callback<List<? extends Share>>() {
+                @Override
+                public void onComplete(List<? extends Share> result) {
+                    shareAdapter.updateData(result);
+                }
+            });
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
