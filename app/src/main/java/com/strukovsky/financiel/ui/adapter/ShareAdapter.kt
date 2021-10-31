@@ -1,15 +1,19 @@
 package com.strukovsky.financiel.ui.adapter
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.strukovsky.financiel.R
 import com.strukovsky.financiel.db.entity.Share
 
 class ShareAdapter(private var data: List<Share>): RecyclerView.Adapter<ShareAdapter.ViewHolder>() {
+
+    var navController: NavController? = null
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val shareTicker: TextView = view.findViewById(R.id.share_ticker)
@@ -31,8 +35,10 @@ class ShareAdapter(private var data: List<Share>): RecyclerView.Adapter<ShareAda
         val currentShare = data[position]
         holder.shareName.text = currentShare.name
         holder.shareTicker.text = currentShare.ticker
+        val args = Bundle()
+        args.putInt("SHARE_ID", currentShare._id)
         holder.itemView.setOnClickListener {
-            Log.i("AAAAAA", holder.shareTicker.text.toString())
+            navController?.navigate(R.id.navigation_analysis, args)
         }
     }
 

@@ -15,7 +15,6 @@ data class CashFlow(
     val _id: Int,
     @ColumnInfo(name="share_id", index = true)
     val shareId: Int,
-
     val revenue: Long,
     val costPrice: Long,
     val sales: Long,

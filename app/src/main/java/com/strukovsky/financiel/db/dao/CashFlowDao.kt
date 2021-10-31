@@ -11,4 +11,8 @@ interface CashFlowDao {
     fun getAllCashFlow(): List<CashFlow>
     @Insert
     fun addCashFlow(cashFlow: CashFlow)
+
+    @Query("SELECT * FROM CashFlow WHERE share_id = :id")
+    fun findByShareId(id: Int)
+
 }

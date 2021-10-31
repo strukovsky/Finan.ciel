@@ -13,4 +13,7 @@ interface BalanceSheetDao {
     @Insert
     fun addBalanceSheet(balanceSheet: BalanceSheet)
 
+    @Query("SELECT * FROM BalanceSheet WHERE share_id = :id")
+    fun findByShareId(id: Int): BalanceSheet
+
 }
