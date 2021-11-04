@@ -11,6 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.strukovsky.financiel.db.entity.BalanceSheet;
 import com.strukovsky.financiel.db.entity.CashFlow;
 import com.strukovsky.financiel.db.entity.Share;
+import com.strukovsky.financiel.db.task.balance_sheet.AddAllBalanceSheetTask;
+import com.strukovsky.financiel.db.task.cash_flow.AddAllCashFlowTask;
 import com.strukovsky.financiel.db.task.share.AddAllSharesTask;
 import com.strukovsky.financiel.db.task.TaskRunner;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-       // populateDatabase();
+        populateDatabase();
 
     }
 
@@ -42,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         return navController;
     }
 
-    protected void populateDatabase()
-    {
+    protected void populateDatabase() {
         List<Share> data = Arrays.asList(
                 new Share(1, "APPL", "Apple", "USA", "IT",
                         "Apple Company is big company", 16487121),
@@ -53,26 +55,36 @@ public class MainActivity extends AppCompatActivity {
                         "Ford is automobiles", 5000000)
         );
         List<BalanceSheet> balanceSheets = Arrays.asList(
-                new BalanceSheet(1, 1, 34940,
+                new BalanceSheet(1, 1, 351002, 134836, 34940,
                         27699, 26278, 127877,
                         39440,
 
-                        54763, 7612, -1, 109106,
-                        -1,-1,63090)
+                        287912, 125481, 54763, 7612, -1, 109106,
+                        63090)
         );
         List<CashFlow> cashFlows = Arrays.asList(
                 new CashFlow(
-                        1, 1, 83360,
-                        48186, 11388, -1,
-                        -1, 20551
+                        1, 1, 104038, 94680, 14545, 93353
                 )
         );
-     TaskRunner.INSTANCE.execute(new AddAllSharesTask(this, data), new TaskRunner.Callback<Boolean>() {
-         @Override
-         public void onComplete(Boolean result) {
-             Log.i("AAAAA", result.toString());
-         }
-     });
+        TaskRunner.INSTANCE.execute(new AddAllSharesTask(this, data), new TaskRunner.Callback<Boolean>() {
+            @Override
+            public void onComplete(Boolean result) {
+
+            }
+        });
+        TaskRunner.INSTANCE.execute(new AddAllBalanceSheetTask(this, balanceSheets), new TaskRunner.Callback<Boolean>() {
+            @Override
+            public void onComplete(Boolean result) {
+
+            }
+        });
+        TaskRunner.INSTANCE.execute(new AddAllCashFlowTask(this, cashFlows), new TaskRunner.Callback<Boolean>() {
+            @Override
+            public void onComplete(Boolean result) {
+
+            }
+        });
 
     }
 }

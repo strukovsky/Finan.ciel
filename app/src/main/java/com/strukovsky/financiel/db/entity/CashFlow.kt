@@ -15,13 +15,29 @@ data class CashFlow(
     val _id: Int,
     @ColumnInfo(name="share_id", index = true)
     val shareId: Int,
+    /**
+     * Gross money earned by company by operating (primary) activity
+     */
     val revenue: Long,
-    val costPrice: Long,
-    val sales: Long,
-    @ColumnInfo(name = "ebitda")
-    val EBITDA: Long,
-    @ColumnInfo(name = "free_cash_flow")
-    val freeCashFlow: Long,
+    /**
+     * Net income gained by primary activity
+     */
     @ColumnInfo(name = "net_income")
-    val netIncome: Long
+    val netIncome: Long,
+
+    /**
+     * Cash involved into non-operating activity i.e. investing
+     */
+    val investing: Long,
+
+    /**
+     * Cash involved into non-operating activity i.e. finance
+     */
+    val financing: Long
+
+
+
+
+
+
 )

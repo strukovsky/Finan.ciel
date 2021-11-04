@@ -4,4 +4,9 @@
     <string name="title_analysis">Analysis</string>
     <string name="title_settings">Settings</string>
     <string name="query">Enter your query</string>
+    <string name="efficiency">Efficiency</string>
+    <string name="net_income_to_revenue">Net Income / Revenue</string>
+    <string name="returns">Returns</string>
+    <string name="return_on_assets">Return on Assets (ROA)</string>
+    <string name="return_on_equity">Return on Equity (ROE)</string>
 </resources>

@@ -19,6 +19,8 @@ data class BalanceSheet
     /*
     Here assets start. Assets are logically divided into current and long-term assets.
      */
+    val assets: Long,
+    val currentAssets: Long,
     /**
     Current assets start with cash and cash equivalent. It's money on company's account.
      */
@@ -51,7 +53,8 @@ data class BalanceSheet
     /*
     Liabilities are logically divided into current and long-term liabilities
      */
-
+    val liabilities: Long,
+    val currentLiabilities: Long,
     /**
      * Current liabilities start with accounts payable which represents money loaned from outside
      */
@@ -78,23 +81,11 @@ data class BalanceSheet
     /*
      *  Equity
      */
-
-    /**
-     * Surplus
-     */
-    val surplus: Long,
-
-    /**
-     * Reinvested earnings
-     */
-    @ColumnInfo(name = "reinvested_earnings")
-    val reinvestedEarnings: Long,
-
     /**
      * Shareowners' equity
      */
 
-    val shareowners: Long
+    val equity: Long
 
 
 
