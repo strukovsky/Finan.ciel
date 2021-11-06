@@ -9,4 +9,10 @@
     <string name="returns">Returns</string>
     <string name="return_on_assets">Return on Assets (ROA)</string>
     <string name="return_on_equity">Return on Equity (ROE)</string>
+    <string name="bankrupt">Bankrupt analysis</string>
+    <string name="quick_ratio">Quick Ratio</string>
+    <string name="current_ratio">Current Ratio</string>
+    <string name="debt_to_equity">Debt / Equity</string>
+    <string name="analysis_empty">No share is selected. To fix this, go to \"Search panel\" and select any share
+    </string>
 </resources>
