@@ -31,18 +31,14 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+       /* AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_search, R.id.navigation_analysis, R.id.navigation_settings)
-                .build();
+                .build();*/
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         //populateDatabase();
 
-    }
-
-    public NavController getNavController() {
-        return navController;
     }
 
     protected void populateDatabase() {
@@ -60,11 +56,34 @@ public class MainActivity extends AppCompatActivity {
                         39440,
 
                         287912, 125481, 54763, 7612, -1, 109106,
-                        63090)
+                        63090),
+                new BalanceSheet(2, 2, 96698,
+                        9049, 0,
+                        0, 0, 0,
+                        0,
+
+                        69287, 9834, 0,
+                        7612, 0, 44793,
+                        27411),
+                new BalanceSheet(3, 3, 252677,
+                        106968, 46426,
+                        0, 43576,
+                        4630,
+                        63337,
+
+                        216084, 89033, 0,
+                        13388, 883, 97249,
+                        36593)
         );
         List<CashFlow> cashFlows = Arrays.asList(
                 new CashFlow(
                         1, 1, 108949, 94680, 14545, 93353
+                ),
+                new CashFlow(
+                        2, 2, 16664, 635, 0, 0
+                ),
+                new CashFlow(
+                        3, 3, 35683, 1822, 0, 0
                 )
         );
         TaskRunner.INSTANCE.execute(new AddAllSharesTask(this, data), new TaskRunner.Callback<Boolean>() {
