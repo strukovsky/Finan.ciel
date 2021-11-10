@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.analysis.AnalysisFragment"
-        android:orientation="vertical"
->
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/query" android:hint="@string/query" android:inputType="text"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_height="match_parent" android:layout_width="match_parent">
+    <LinearLayout
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent" android:layout_height="wrap_content"
-                                               android:id="@+id/search_result"
-    />
+            android:layout_width="match_parent"
+            tools:context=".ui.analysis.AnalysisFragment"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+        <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/query" android:hint="@string/query" android:inputType="text"
+                  android:importantForAutofill="no"/>
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:id="@+id/search_result"
+        />
+
+        <View android:layout_width="match_parent" android:layout_height="@dimen/bottom_navigation_height"/>
+
+
+    </LinearLayout>
+</ScrollView>

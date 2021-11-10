@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         );
         List<CashFlow> cashFlows = Arrays.asList(
                 new CashFlow(
-                        1, 1, 104038, 94680, 14545, 93353
+                        1, 1, 108949, 94680, 14545, 93353
                 )
         );
         TaskRunner.INSTANCE.execute(new AddAllSharesTask(this, data), new TaskRunner.Callback<Boolean>() {
