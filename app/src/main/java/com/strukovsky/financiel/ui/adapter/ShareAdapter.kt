@@ -1,7 +1,6 @@
 package com.strukovsky.financiel.ui.adapter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +19,9 @@ class ShareAdapter(private var data: List<Share>): RecyclerView.Adapter<ShareAda
         val shareName: TextView = view.findViewById(R.id.share_name)
     }
 
-    fun updateData(shares: Any)
+    fun updateData(shares: List<*>)
     {
-        data = shares as List<Share>
+        data = shares.map { it as Share }
         this.notifyDataSetChanged()
     }
 
