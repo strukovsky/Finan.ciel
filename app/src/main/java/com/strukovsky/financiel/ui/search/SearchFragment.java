@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.strukovsky.financiel.R;
 import com.strukovsky.financiel.db.entity.Share;
 import com.strukovsky.financiel.db.task.TaskRunner;
+import com.strukovsky.financiel.db.task.share.FindShareByNameOrTickerTask;
 import com.strukovsky.financiel.db.task.share.FindShareByTickerTask;
 import com.strukovsky.financiel.db.task.share.ReadAllSharesTask;
 import com.strukovsky.financiel.ui.adapter.ShareAdapter;
@@ -65,10 +66,9 @@ public class SearchFragment extends Fragment implements TextWatcher {
         if (queryString.equals("")) {
            shareAdapter.updateData(allShares);
         } else
-            TaskRunner.INSTANCE.execute(new FindShareByTickerTask(requireContext(), queryString), new TaskRunner.Callback<List<? extends Share>>() {
+            TaskRunner.INSTANCE.execute(new FindShareByNameOrTickerTask(requireContext(), queryString), new TaskRunner.Callback<List<? extends Share>>() {
                 @Override
                 public void onComplete(List<? extends Share> result) {
-
                     shareAdapter.updateData(result);
                 }
             });

@@ -6,7 +6,7 @@ import com.strukovsky.financiel.db.entity.Share
 import com.strukovsky.financiel.db.task.AbstractTask
 import java.util.concurrent.Callable
 
-class FindShareByTickerTask(private val context: Context, private val query: String): AbstractTask<List<Share>>(context) {
+class FindShareByTickerTask(context: Context, private val query: String): AbstractTask<List<Share>>(context) {
     override fun call(): List<Share>? {
         return db?.shareDao?.findByTicker(query)
 
