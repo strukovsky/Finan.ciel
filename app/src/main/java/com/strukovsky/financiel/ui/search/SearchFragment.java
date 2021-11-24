@@ -46,6 +46,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
         TaskRunner.INSTANCE.execute(new ReadAllSharesTask(this.requireContext()), new TaskRunner.Callback<List<? extends Share>>() {
             @Override
             public void onComplete(List<? extends Share> result) {
+                allShares.clear();
                 allShares.addAll(result);
                 shareAdapter.updateData(allShares);
             }

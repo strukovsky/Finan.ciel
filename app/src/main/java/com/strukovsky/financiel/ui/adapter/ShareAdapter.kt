@@ -1,7 +1,6 @@
 package com.strukovsky.financiel.ui.adapter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
