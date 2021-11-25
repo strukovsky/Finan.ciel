@@ -17,7 +17,7 @@ class ReturnsTest {
             10000,100000, 10000,10000)
         val cashFlow = CashFlow(1,1,10000,20000,10000, 10000)
         val actual = Returns.returnOnEquity(balanceSheet, cashFlow)
-        Assert.assertEquals("0.20", actual)
+        Assert.assertEquals("2.00", actual)
     }
 
     @Test
@@ -41,7 +41,7 @@ class ReturnsTest {
             10000,100000,100000,
             100000,10000,100000,100000,
             10000,100000, 10000,10000)
-        val cashFlow = CashFlow(1,1,10000,-20000,10000, 10000)
+        val cashFlow = CashFlow(1,1,10000,-2000,10000, 10000)
         val actual = Returns.returnOnEquity(balanceSheet, cashFlow)
         Assert.assertEquals("-0.20", actual)
     }
@@ -53,7 +53,7 @@ class ReturnsTest {
             110000, 10000,10000,
             10000,100000,100000,
             100000,110000,100000,100000,
-            10000,100000, 10000,10000)
+            10000,100000, 10000,0)
         val cashFlow = CashFlow(1,1,10000,-20000,10000, 10000)
         val actual = Returns.returnOnEquity(balanceSheet, cashFlow)
         Assert.assertEquals(null, actual)
