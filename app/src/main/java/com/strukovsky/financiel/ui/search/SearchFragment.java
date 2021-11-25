@@ -28,7 +28,7 @@ import java.util.List;
 public class SearchFragment extends Fragment implements TextWatcher {
 
     private SearchViewModel searchViewModel;
-    private  NavController navController;
+    private NavController navController;
     private ShareAdapter shareAdapter = new ShareAdapter(new ArrayList<Share>());
     private final List<Share> allShares = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String queryString = s.toString();
         if (queryString.equals("")) {
-           shareAdapter.updateData(allShares);
+            shareAdapter.updateData(allShares);
         } else
             TaskRunner.INSTANCE.execute(new FindShareByNameOrTickerTask(requireContext(), queryString), new TaskRunner.Callback<List<? extends Share>>() {
                 @Override

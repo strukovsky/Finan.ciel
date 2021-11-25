@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.strukovsky.financiel.R;
-import com.strukovsky.financiel.calculations.Efficiency;
+import com.strukovsky.financiel.analyzers.Analysis;
+import com.strukovsky.financiel.analyzers.Recommendations;
 import com.strukovsky.financiel.calculations.Returns;
 import com.strukovsky.financiel.db.entity.BalanceSheet;
 import com.strukovsky.financiel.db.entity.CashFlow;
@@ -18,11 +20,6 @@ import com.strukovsky.financiel.db.entity.Share;
 import com.strukovsky.financiel.db.task.FindAllDataByShareId;
 import com.strukovsky.financiel.db.task.ShareDataBundle;
 import com.strukovsky.financiel.db.task.TaskRunner;
-import com.strukovsky.financiel.db.task.balance_sheet.FindBalanceSheetByShareIdTask;
-import com.strukovsky.financiel.db.task.cash_flow.FindCashFlowByShareIdTask;
-import com.strukovsky.financiel.db.task.share.FindShareByIdTask;
-
-import java.util.Objects;
 
 public class AnalysisFragment extends Fragment {
 
@@ -30,7 +27,7 @@ public class AnalysisFragment extends Fragment {
     TextView ticker;
     TextView industry;
     TextView name;
-    TextView netIncomeToRevenue;
+    AnalysisView netIncomeToRevenue;
     TextView returnOnEquity;
     TextView returnOnAssets;
     TextView quickRatio;
@@ -47,7 +44,7 @@ public class AnalysisFragment extends Fragment {
         }
 
         Integer shareId = analysisViewModel.getShareId();
-        if(shareId == null){
+        if (shareId == null) {
             root = setupAnalysisEmpty(inflater, container);
         } else {
             root = setupAnalysisView(inflater, container);
@@ -58,17 +55,22 @@ public class AnalysisFragment extends Fragment {
     }
 
     private View setupAnalysisView(LayoutInflater inflater, ViewGroup container) {
-        View root = inflater.inflate(R.layout.fragment_analysis, container, false);
-        ticker = root.findViewById(R.id.share_ticker);
-        industry = root.findViewById(R.id.share_industry);
-        name = root.findViewById(R.id.share_name);
-        netIncomeToRevenue = root.findViewById(R.id.net_income_to_revenue);
-        returnOnAssets = root.findViewById(R.id.return_on_assets);
-        returnOnEquity = root.findViewById(R.id.return_on_equity);
-        quickRatio = root.findViewById(R.id.quick_ratio);
-        currentRatio = root.findViewById(R.id.current_ratio);
-        debtToEquity = root.findViewById(R.id.debt_to_equity);
-        return root;
+        View scrollViewRoot = inflater.inflate(R.layout.fragment_analysis, container, false);
+        LinearLayout root = scrollViewRoot.findViewById(R.id.root);
+        ticker = scrollViewRoot.findViewById(R.id.share_ticker);
+        industry = scrollViewRoot.findViewById(R.id.share_industry);
+        name = scrollViewRoot.findViewById(R.id.share_name);
+        /*netIncomeToRevenue = root.findViewById(R.id.net_income_to_revenue);*/
+        netIncomeToRevenue =
+                new AnalysisView(scrollViewRoot.getContext(),
+                        new Analysis(Recommendations.Negative, "Test", "0.5", "Net income"));
+        root.addView(netIncomeToRevenue);
+        returnOnAssets = scrollViewRoot.findViewById(R.id.return_on_assets);
+        returnOnEquity = scrollViewRoot.findViewById(R.id.return_on_equity);
+        quickRatio = scrollViewRoot.findViewById(R.id.quick_ratio);
+        currentRatio = scrollViewRoot.findViewById(R.id.current_ratio);
+        debtToEquity = scrollViewRoot.findViewById(R.id.debt_to_equity);
+        return scrollViewRoot;
     }
 
     private View setupAnalysisEmpty(LayoutInflater inflater, ViewGroup container) {
@@ -103,7 +105,7 @@ public class AnalysisFragment extends Fragment {
     }
 
     private void makeAnalysisOfEfficiency() {
-        netIncomeToRevenue.setText(Efficiency.INSTANCE.netIncomeToRevenue(cashFlow));
+        // netIncomeToRevenue.valueView.setText(Efficiency.INSTANCE.netIncomeToRevenue(cashFlow));
     }
 
     private void prepareDataFromDB(int id) {
