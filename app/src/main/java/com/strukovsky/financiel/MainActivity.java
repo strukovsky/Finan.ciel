@@ -1,6 +1,7 @@
 package com.strukovsky.financiel;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        //populateDatabase();
+        // populateDatabase();
+
 
     }
 
@@ -104,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        Log.i("Database", "populated");
 
     }
 }

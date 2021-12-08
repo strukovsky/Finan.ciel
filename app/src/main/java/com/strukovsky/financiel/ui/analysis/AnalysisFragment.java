@@ -1,6 +1,7 @@
 package com.strukovsky.financiel.ui.analysis;
 
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.strukovsky.financiel.R;
 import com.strukovsky.financiel.analyzers.Analysis;
 import com.strukovsky.financiel.analyzers.Recommendations;
+import com.strukovsky.financiel.calculations.CreditRatio;
 import com.strukovsky.financiel.calculations.Returns;
 import com.strukovsky.financiel.db.entity.BalanceSheet;
 import com.strukovsky.financiel.db.entity.CashFlow;
@@ -63,13 +65,16 @@ public class AnalysisFragment extends Fragment {
         /*netIncomeToRevenue = root.findViewById(R.id.net_income_to_revenue);*/
         netIncomeToRevenue =
                 new AnalysisView(scrollViewRoot.getContext(),
-                        new Analysis(Recommendations.Negative, "Test", "0.5", "Net income"));
+                        new Analysis(Recommendations.Neutral, "Test", "0.5", "Net income"));
         root.addView(netIncomeToRevenue);
         returnOnAssets = scrollViewRoot.findViewById(R.id.return_on_assets);
         returnOnEquity = scrollViewRoot.findViewById(R.id.return_on_equity);
         quickRatio = scrollViewRoot.findViewById(R.id.quick_ratio);
         currentRatio = scrollViewRoot.findViewById(R.id.current_ratio);
         debtToEquity = scrollViewRoot.findViewById(R.id.debt_to_equity);
+        View placeholder = new View(getContext());
+        placeholder.setMinimumHeight(100);
+        root.addView(placeholder);
         return scrollViewRoot;
     }
 
@@ -108,6 +113,11 @@ public class AnalysisFragment extends Fragment {
         // netIncomeToRevenue.valueView.setText(Efficiency.INSTANCE.netIncomeToRevenue(cashFlow));
     }
 
+    private void makeDebtToEquity()
+    {
+        debtToEquity.setText(CreditRatio.findDebtRatio(balanceSheet));
+    }
+
     private void prepareDataFromDB(int id) {
 
         TaskRunner.INSTANCE.execute(new FindAllDataByShareId(requireContext(), id), new TaskRunner.Callback<ShareDataBundle>() {
@@ -119,6 +129,7 @@ public class AnalysisFragment extends Fragment {
                 setShareInfo();
                 makeAnalysisOfEfficiency();
                 makeAnalysisOfReturns();
+                makeDebtToEquity();
             }
         });
     }
