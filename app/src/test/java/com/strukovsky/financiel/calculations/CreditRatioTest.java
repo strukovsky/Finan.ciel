@@ -1,6 +1,7 @@
 package com.strukovsky.financiel.calculations;
 
 import com.strukovsky.financiel.db.entity.BalanceSheet;
+import java.math.BigDecimal;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +14,6 @@ public class CreditRatioTest {
                 10000,100000,100000,
                 100000,5000,100000,100000,
                 10000,100000, 10000,10000);
-        String actual = CreditRatio.findDebtRatio(q);
-        Assert.assertEquals("0.50", actual);
+        Assert.assertEquals(new BigDecimal("0.50"), CreditRatio.findDebtRatio(q));
     }
 }

@@ -5,6 +5,7 @@ import com.strukovsky.financiel.db.entity.BalanceSheet
 import com.strukovsky.financiel.db.entity.CashFlow
 import org.junit.Assert
 import org.junit.Test
+import java.math.BigDecimal
 
 class ReturnsTest {
     @Test
@@ -17,7 +18,7 @@ class ReturnsTest {
             10000,100000, 10000,10000)
         val cashFlow = CashFlow(1,1,10000,20000,10000, 10000)
         val actual = Returns.returnOnEquity(balanceSheet, cashFlow)
-        Assert.assertEquals("2.00", actual)
+        Assert.assertEquals(BigDecimal("2.00"), actual)
     }
 
     @Test
@@ -30,7 +31,7 @@ class ReturnsTest {
             10000,100000, 10000,10000)
         val cashFlow = CashFlow(1,1,10000,20000,10000, 10000)
         val actual = Returns.returnOnAssets(balanceSheet, cashFlow)
-        Assert.assertEquals("0.18", actual)
+        Assert.assertEquals(BigDecimal("0.18"), actual)
     }
 
     @Test
@@ -43,7 +44,7 @@ class ReturnsTest {
             10000,100000, 10000,10000)
         val cashFlow = CashFlow(1,1,10000,-2000,10000, 10000)
         val actual = Returns.returnOnEquity(balanceSheet, cashFlow)
-        Assert.assertEquals("-0.20", actual)
+        Assert.assertEquals(BigDecimal("-0.20"), actual)
     }
 
     @Test

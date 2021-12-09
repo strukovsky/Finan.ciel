@@ -1,7 +1,6 @@
 package com.strukovsky.financiel.ui.analysis;
 
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import com.strukovsky.financiel.R;
-import com.strukovsky.financiel.analyzers.Analysis;
-import com.strukovsky.financiel.analyzers.Recommendations;
+import com.strukovsky.financiel.analyzers.Analyzer;
 import com.strukovsky.financiel.calculations.CreditRatio;
-import com.strukovsky.financiel.calculations.Returns;
 import com.strukovsky.financiel.db.entity.BalanceSheet;
 import com.strukovsky.financiel.db.entity.CashFlow;
 import com.strukovsky.financiel.db.entity.Share;
@@ -30,11 +27,11 @@ public class AnalysisFragment extends Fragment {
     TextView industry;
     TextView name;
     AnalysisView netIncomeToRevenue;
-    TextView returnOnEquity;
-    TextView returnOnAssets;
-    TextView quickRatio;
-    TextView currentRatio;
-    TextView debtToEquity;
+    AnalysisView returnOnEquity;
+    AnalysisView returnOnAssets;
+    AnalysisView quickRatio;
+    AnalysisView currentRatio;
+    AnalysisView debtToEquity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +46,8 @@ public class AnalysisFragment extends Fragment {
         if (shareId == null) {
             root = setupAnalysisEmpty(inflater, container);
         } else {
+            prepareDataFromDB(shareId);
             root = setupAnalysisView(inflater, container);
-            performAnalysis(shareId);
         }
 
         return root;
@@ -62,16 +59,31 @@ public class AnalysisFragment extends Fragment {
         ticker = scrollViewRoot.findViewById(R.id.share_ticker);
         industry = scrollViewRoot.findViewById(R.id.share_industry);
         name = scrollViewRoot.findViewById(R.id.share_name);
-        /*netIncomeToRevenue = root.findViewById(R.id.net_income_to_revenue);*/
+
+        root.addView(new AnalysisSectionHeaderView(requireContext(), "Efficiency analysis"));
+
         netIncomeToRevenue =
-                new AnalysisView(scrollViewRoot.getContext(),
-                        new Analysis(Recommendations.Neutral, "Test", "0.5", "Net income"));
+                new AnalysisView(requireContext());
         root.addView(netIncomeToRevenue);
-        returnOnAssets = scrollViewRoot.findViewById(R.id.return_on_assets);
-        returnOnEquity = scrollViewRoot.findViewById(R.id.return_on_equity);
-        quickRatio = scrollViewRoot.findViewById(R.id.quick_ratio);
-        currentRatio = scrollViewRoot.findViewById(R.id.current_ratio);
-        debtToEquity = scrollViewRoot.findViewById(R.id.debt_to_equity);
+
+
+        root.addView(new AnalysisSectionHeaderView(requireContext(), "Returns"));
+        returnOnAssets = new AnalysisView(requireContext());
+        root.addView(returnOnAssets);
+
+        returnOnEquity = new AnalysisView(requireContext());
+        root.addView(returnOnEquity);
+
+        root.addView(new AnalysisSectionHeaderView(requireContext(), "Bankrupt analysis"));
+
+        quickRatio = new AnalysisView(requireContext());
+        currentRatio =  new AnalysisView(requireContext());
+        debtToEquity = new AnalysisView(requireContext());
+
+        root.addView(quickRatio);
+        root.addView(currentRatio);
+        root.addView(debtToEquity);
+
         View placeholder = new View(getContext());
         placeholder.setMinimumHeight(100);
         root.addView(placeholder);
@@ -94,10 +106,6 @@ public class AnalysisFragment extends Fragment {
     CashFlow cashFlow;
     BalanceSheet balanceSheet;
 
-    private void performAnalysis(int id) {
-        prepareDataFromDB(id);
-    }
-
     private void setShareInfo() {
         ticker.setText(share.getTicker());
         industry.setText(share.getIndustry());
@@ -105,17 +113,19 @@ public class AnalysisFragment extends Fragment {
     }
 
     private void makeAnalysisOfReturns() {
-        returnOnEquity.setText(Returns.INSTANCE.returnOnEquity(balanceSheet, cashFlow));
-        returnOnAssets.setText(Returns.INSTANCE.returnOnAssets(balanceSheet, cashFlow));
+        returnOnEquity.populate(Analyzer.INSTANCE.analyzeReturnOnEquity(balanceSheet, cashFlow));
+        returnOnAssets.populate(Analyzer.INSTANCE.analyzeReturnOnAssets(balanceSheet, cashFlow));
     }
 
     private void makeAnalysisOfEfficiency() {
-        // netIncomeToRevenue.valueView.setText(Efficiency.INSTANCE.netIncomeToRevenue(cashFlow));
+        netIncomeToRevenue.populate( Analyzer.INSTANCE.analyzeNetIncomeToRevenue(cashFlow));
     }
 
-    private void makeDebtToEquity()
+    private void makeAnalysisOfBankrupt()
     {
-        debtToEquity.setText(CreditRatio.findDebtRatio(balanceSheet));
+        quickRatio.populate(Analyzer.INSTANCE.analyzeQuickRatio(balanceSheet));
+        currentRatio.populate(Analyzer.INSTANCE.analyzeCurrentRatio(balanceSheet));
+        debtToEquity.populate(Analyzer.INSTANCE.analyzeDebtToEquity(balanceSheet));
     }
 
     private void prepareDataFromDB(int id) {
@@ -129,7 +139,7 @@ public class AnalysisFragment extends Fragment {
                 setShareInfo();
                 makeAnalysisOfEfficiency();
                 makeAnalysisOfReturns();
-                makeDebtToEquity();
+                makeAnalysisOfBankrupt();
             }
         });
     }

@@ -14,7 +14,7 @@ class EfficiencyTest {
     {
         val q = CashFlow(1, 1, 10000, 7000, 20000, 40000)
         val actual = Efficiency.netIncomeToRevenue(q)
-        Assert.assertEquals("0.70", actual)
+        Assert.assertEquals(BigDecimal("0.70"), actual)
     }
 
     @Test

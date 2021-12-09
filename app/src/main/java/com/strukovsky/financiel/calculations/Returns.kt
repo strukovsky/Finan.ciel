@@ -6,22 +6,22 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 object Returns {
-    fun returnOnAssets(balanceSheet: BalanceSheet, cashFlow: CashFlow): String?
+    fun returnOnAssets(balanceSheet: BalanceSheet, cashFlow: CashFlow): BigDecimal?
     {
         val assets = BigDecimal(balanceSheet.assets)
         val netIncome = BigDecimal(cashFlow.netIncome)
         if(assets == BigDecimal.ZERO)
             return null
-        return netIncome.divide(assets, 2, RoundingMode.HALF_UP).toString()
+        return netIncome.divide(assets, 2, RoundingMode.HALF_UP)
     }
 
-    fun returnOnEquity(balanceSheet: BalanceSheet, cashFlow: CashFlow): String?
+    fun returnOnEquity(balanceSheet: BalanceSheet, cashFlow: CashFlow): BigDecimal?
     {
         val equityValue = balanceSheet.equity
         if(equityValue == 0L)
             return null
         val equity = BigDecimal(equityValue)
         val netIncome = BigDecimal(cashFlow.netIncome)
-        return netIncome.divide(equity, 2, RoundingMode.HALF_UP).toString()
+        return netIncome.divide(equity, 2, RoundingMode.HALF_UP)
     }
 }
